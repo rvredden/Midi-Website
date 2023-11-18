@@ -2,11 +2,14 @@ import express  from 'express'
 import bodyParser from 'body-parser'
 import fs from 'fs'
 import MidiWriter from 'midi-writer-js'
-import path from 'path'
-import { fileURLToPath } from 'url';
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
 const app = express();
 const port = 3000;
 import OpenAI from "openai";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 //Parse Text
 function parseText(inputText) {
@@ -34,7 +37,7 @@ function parseText(inputText) {
 }
 
 // Get data from ChatGPT
-const openai = new OpenAI({ apiKey: "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" });
+const openai = new OpenAI({ apiKey: process.env.API_KEY});
 
 async function dataSend(data) {
   const completion = await openai.chat.completions.create({
