@@ -1,0 +1,9 @@
+{
+  "name": "midiapp",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.18.2",
+    "midi-writer-js": "^3.1.1",
+    "openai": "^4.19.0"
+  }
+}

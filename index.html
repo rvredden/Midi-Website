@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MIDI Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        #noteInput {
+            width: 60%;
+            margin-bottom: 10px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>MIDI Note Input</h2>
+    <textarea id="noteInput" placeholder="Enter notes here (e.g., C4 E4 G4)" rows="4" cols="50"></textarea><br>
+    <button id="generateButton">Generate MIDI</button>
+    <p id="feedback"></p>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', function() {
+            const notes = document.getElementById('noteInput').value;
+            fetch('/generate_midi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ notes: notes })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('feedback').innerText = 'MIDI file generated! Download link: ' + data.fileUrl;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('feedback').innerText = 'Error generating MIDI.';
+            });
+        });
+    </script>
+</body>
+</html>
